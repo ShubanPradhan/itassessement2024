@@ -2,189 +2,133 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MusicSwipe - Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Music Swipe App</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
-  <header class="navbar">
-    <a href="index.html" class="logo">MusicSwipe</a>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="gallery.html">Gallery</a></li>
-      <li><a href="table.html">Saved Tracks</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li><a href="about.html">About</a></li>
-    </ul>
+  <header>
+    <nav class="navbar">
+      <h1 class="site-title">MusicSwipe</h1>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="table.html">Saved</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
   </header>
+  
+  <main class="container">
+    <div class="track-controls">
+      <button onclick="rejectTrack()">Reject</button>
+    </div>
+    <section class="track-card" id="trackCard">
+      <img id="trackImg" src="" alt="Track Image" />
+      <div class="track-info">
+        <h2 id="trackTitle"></h2>
+        <p id="trackArtist"></p>
+        <audio id="trackAudio" controls></audio>
+      </div>
+    </section>
 
-  <main class="main-content">
-    <div class="slider">
-      <img src="images/slider1.jpg" alt="Banner Image 1" class="slide active" />
-      <img src="images/slider2.jpg" alt="Banner Image 2" class="slide" />
-      <img src="images/slider3.jpg" alt="Banner Image 3" class="slide" />
+    <div class="track-controls">
+      <button onclick="saveTrack()">Save</button>
     </div>
 
-    <div class="card" id="profileCard">
-      <img id="profileImg" src="" alt="Track Artwork" />
-      <div class="info" id="profileInfo"></div>
-      <audio id="audioPlayer" controls class="audio-player"></audio>
-    </div>
-
-    <div class="buttons">
-      <button class="reject" onclick="rejectProfile()">Reject</button>
-      <button class="match" onclick="matchProfile()">Match</button>
-      <button class="report" onclick="openReportModal()">Report</button>
-    </div>
+    <aside class="saved-tracks">
+      <h3>Saved Tracks</h3>
+      <ul id="savedList"></ul>
+    </aside>
   </main>
 
-  <div id="messageBox" class="hidden">
-    <div class="header">
-      <img id="messageProfilePic" src="" alt="Artwork" />
-      <strong id="messageProfileName">Name</strong>
-    </div>
-    <p>Send a message</p>
-    <input type="text" value="Hi, how are you?" class="message-input" />
-    <div class="note">💡 Be respectful. Don't share sensitive information.</div>
-    <button onclick="closeMessageBox()" class="btn-full-width">Send</button>
-  </div>
-
-  <div id="reportModal" class="hidden">
-    <p>Report Track For:</p>
-    <select class="full-width-select">
-      <option>Fake</option>
-      <option>Harassment</option>
-      <option>Others</option>
-    </select>
-    <br /><br />
-    <button onclick="closeReportModal()" class="btn-full-width">Submit Report</button>
-  </div>
-
-  <div id="overlay" class="hidden"></div>
-
-  <footer class="site-footer">
-    <div class="footer-content">
-      <p>© 2025 MusicSwipe. All rights reserved.</p>
-      <address>
-        123 Music Ave, Sound City, World<br />
-        <a href="mailto:contact@musicswipe.com">contact@musicswipe.com</a>
-      </address>
-      <nav class="footer-nav">
-        <a href="index.html">Home</a> |
-        <a href="gallery.html">Gallery</a> |
-        <a href="table.html">Saved Tracks</a> |
-        <a href="contact.html">Contact</a> |
-        <a href="about.html">About</a>
-      </nav>
-    </div>
+  <footer>
+    <p>&copy; 2025 MusicSwipe | Designed by Shuban | <a href="mailto:info@musicswipe.com">info@musicswipe.com</a></p>
   </footer>
 
   <script>
     const tracks = [
-      { img: 'images/diewithasmile.jpg', title: 'Die With A Smile', artist: 'Lady Gaga & Bruno Mars', audio: 'audio/die_with_a_smile.mp3' },
-      { img: 'images/birds_of_a_feather.jpg', title: 'BIRDS OF A FEATHER', artist: 'Billie Eilish', audio: 'audio/birds_of_a_feather.mp3' },
-      { img: 'images/up_from_the_bottom.jpg', title: 'Up From The Bottom', artist: 'Linkin Park', audio: 'audio/up_from_the_bottom.mp3' },
-      { img: 'images/broken_man.jpg', title: 'Broken Man', artist: 'St. Vincent', audio: 'audio/broken_man.mp3' },
-      { img: 'images/luther.jpg', title: 'Luther', artist: 'Kendrick Lamar & SZA', audio: 'audio/luther.mp3' },
-      { img: 'images/evil_j0rdan.jpg', title: 'Evil J0rdan', artist: 'Playboi Carti', audio: 'audio/evil_j0rdan.mp3' },
-      { img: 'images/watch_me.jpg', title: 'Watch Me!', artist: 'Witch Watch', audio: 'audio/watch_me.mp3' },
-      { img: 'images/neon_heaven.jpg', title: 'Neon Heaven', artist: 'Billie Eilish', audio: 'audio/neon_heaven.mp3' }
+      {
+        img: 'images/ailawyer-1512-276326.webp',
+        title: 'ailawyer 15/12',
+        artist: '(AI-Generated)',
+        audio: 'audio/ailawyer-1512-276326.mp3'
+      },
+      {
+        img: 'images/hip-hop-street-legal-14405.jpg',
+        title: 'Hip Hop - Street Legal',
+        artist: 'AntipodeanWriter',
+        audio: 'audio/hip-hop-street-legal-14405.mp3'
+      },
+      {
+        img: 'images/lament-of-eleusis-245769.webp',
+        title: 'Lament of Eleusis',
+        artist: 'SamuelFJohanns',
+        audio: 'audio/lament-of-eleusis-245769.mp3'
+      },
+      {
+        img: 'images/lofi-hiphop-wake-amp-bake-188329.webp',
+        title: 'Lofi hiphop - Wake & Bake',
+        artist: 'Highdrobeats',
+        audio: 'audio/lofi-hiphop-wake-amp-bake-188329.mp3'
+      },
+      {
+        img: 'images/n-2-239367.webp',
+        title: 'n-2',
+        artist: 'kasunvishwa99 (AI-Generated)',
+        audio: 'audio/n-2-239367.mp3'
+      },
+      {
+        img: 'images/one-love-and-one-herb-420-reggae-chill-vibes-334028.webp',
+        title: 'One Love and One Herb - 420 Reggae Chill Vibes (AI-Generated)',
+        artist: 'Captain_Sleepy',
+        audio: 'audio/one-love-and-one-herb-420-reggae-chill-vibes-334028.mp3'
+      },
+      {
+        img: 'images/rasta-man-420-reggae-chill-vibes-334029.webp',
+        title: 'Rasta Man - 420 Reggae Chill Vibes (AI-Generated)',
+        artist: 'Captain_Sleepy',
+        audio: 'audio/rasta-man-420-reggae-chill-vibes-334029.mp3'
+      },
+      {
+        img: 'images/82bfb5-sunset-420-reggae-chill-vibes-334031.webp',
+        title: 'Sunset - 420 Reggae Chill Vibes (AI-Generated)',
+        artist: 'Captain_Sleepy',
+        audio: 'audio/sunset-420-reggae-chill-vibes-334031.mp3'
+      }
     ];
 
-    let currentIndex = 0;
+    let current = 0;
+    const trackImg = document.getElementById('trackImg');
+    const trackTitle = document.getElementById('trackTitle');
+    const trackArtist = document.getElementById('trackArtist');
+    const trackAudio = document.getElementById('trackAudio');
+    const savedList = document.getElementById('savedList');
 
     function loadTrack(index) {
-      const track = tracks[index];
-      const profileImg = document.getElementById('profileImg');
-      const profileInfo = document.getElementById('profileInfo');
-      const audioPlayer = document.getElementById('audioPlayer');
-
-      profileImg.src = track.img;
-      profileImg.alt = `${track.title} Album Artwork`;
-      profileInfo.textContent = `${track.title} — ${track.artist}`;
-      audioPlayer.src = track.audio;
-      audioPlayer.load();
+      const t = tracks[index];
+      trackImg.src = t.img;
+      trackImg.alt = `${t.title} album art`;
+      trackTitle.textContent = t.title;
+      trackArtist.textContent = t.artist;
+      trackAudio.src = t.audio;
     }
 
-    function matchProfile() {
-      const track = tracks[currentIndex];
-
-      swipeRight();
-      setTimeout(() => {
-        document.getElementById('messageProfilePic').src = track.img;
-        document.getElementById('messageProfileName').textContent = track.title;
-        document.getElementById('messageBox').classList.remove('hidden');
-        document.getElementById('overlay').classList.remove('hidden');
-      }, 300);
-
-      saveTrack(track);
+    function rejectTrack() {
+      current = (current + 1) % tracks.length;
+      loadTrack(current);
     }
 
-    function saveTrack(track) {
-      let savedTracks = JSON.parse(localStorage.getItem('savedTracks') || '[]');
-      const exists = savedTracks.some(saved => saved.title === track.title && saved.artist === track.artist);
-      if (!exists) {
-        savedTracks.push(track);
-        localStorage.setItem('savedTracks', JSON.stringify(savedTracks));
-      }
+    function saveTrack() {
+      const t = tracks[current];
+      const li = document.createElement('li');
+      li.textContent = `${t.title} - ${t.artist}`;
+      savedList.appendChild(li);
+      rejectTrack();
     }
 
-    function rejectProfile() {
-      swipeLeft();
-      currentIndex = (currentIndex + 1) % tracks.length;
-      setTimeout(() => loadTrack(currentIndex), 300);
-    }
-
-    function swipeRight() {
-      const card = document.getElementById('profileCard');
-      card.style.transition = 'transform 0.4s ease';
-      card.style.transform = 'translateX(150%) rotate(15deg)';
-      setTimeout(() => {
-        card.style.transition = 'none';
-        card.style.transform = 'translateX(0) rotate(0deg)';
-        currentIndex = (currentIndex + 1) % tracks.length;
-        loadTrack(currentIndex);
-      }, 400);
-    }
-
-    function swipeLeft() {
-      const card = document.getElementById('profileCard');
-      card.style.transition = 'transform 0.4s ease';
-      card.style.transform = 'translateX(-150%) rotate(-15deg)';
-      setTimeout(() => {
-        card.style.transition = 'none';
-        card.style.transform = 'translateX(0) rotate(0deg)';
-      }, 400);
-    }
-
-    function closeMessageBox() {
-      document.getElementById('messageBox').classList.add('hidden');
-      document.getElementById('overlay').classList.add('hidden');
-    }
-
-    function openReportModal() {
-      document.getElementById('reportModal').classList.remove('hidden');
-      document.getElementById('overlay').classList.remove('hidden');
-    }
-
-    function closeReportModal() {
-      document.getElementById('reportModal').classList.add('hidden');
-      document.getElementById('overlay').classList.add('hidden');
-    }
-
-    // Initial load
-    loadTrack(currentIndex);
-
-    // Banner slider
-    let slideIndex = 0;
-    const slides = document.querySelectorAll('.slide');
-    function showSlides() {
-      slides.forEach(s => s.classList.remove('active'));
-      slides[slideIndex].classList.add('active');
-      slideIndex = (slideIndex + 1) % slides.length;
-    }
-    setInterval(showSlides, 5000);
+    loadTrack(current);
   </script>
 </body>
 </html>

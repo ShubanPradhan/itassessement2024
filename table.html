@@ -1,91 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Saved Tracks</title>
+  <title>Downloadable - MusicSwipe</title>
   <link rel="stylesheet" href="style.css" />
-  <style>
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 12px;
-      text-align: left;
-    }
-    th {
-      background-color: #101820;
-      color: #fff;
-    }
-    caption {
-      caption-side: top;
-      font-size: 1.5em;
-      margin-bottom: 10px;
-    }
-    .table-container {
-      overflow-x: auto;
-    }
-  </style>
 </head>
 <body>
-  <header class="navbar">
-    <a href="index.html" class="logo">MusicSwipe</a>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="gallery.html">Gallery</a></li>
-      <li><a href="table.html">Saved Tracks</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li><a href="about.html">About</a></li>
-    </ul>
+  <header>
+    <nav class="navbar">
+      <h1 class="site-title">MusicSwipe</h1>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="table.html">Saved</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
   </header>
 
-  <main class="main-content">
-    <div class="table-container">
-      <table>
-        <caption>My Saved Tracks</caption>
+<table>
+        <caption>Links to Download the Music</caption>
         <thead>
-          <tr>
-            <th rowspan="2">#</th>
-            <th colspan="2">Track Info</th>
-            <th rowspan="2">Genre</th>
-          </tr>
-          <tr>
-            <th>Title</th>
-            <th>Artist</th>
-          </tr>
+            <tr>
+                <th>Title</th>
+                <th>Artist</th>
+                <th>Download</th>
+            </tr>
         </thead>
-        <tbody id="savedTracksTable">
-          <tr><td colspan="4">No saved tracks yet.</td></tr>
+        <tbody>
+            <tr>
+                <td>ailawyer 15/12</td>
+                <td>(AI-Generated)</td>
+                <td><a id="" href="audio/track.mp3" download>Available</a></td>
+            </tr>
+            <tr>
+                <td>Hip Hop - Street Legal</td>
+                <td>AntipodeanWriter</td>
+                <td>Available</td>
+            </tr>
+            <tr>
+                <td>Lament of Eleusis</td>
+                <td>SamuelFJohanns</td>
+                <td>Available</td>
+            </tr>
+            <tr>
+                <td>Lofi hiphop - Wake & Bake</td>
+                <td>Highdrobeats</td>
+                <td>Available</td>
+            </tr>
+            <tr>
+                <td>n-2</td>
+                <td>kasunvishwa99 (AI-Generated)</td>
+                <td>Available</td>
+            </tr>
+            <tr>
+                <td>One Love and One Herb - 420 Reggae Chill Vibes (AI-Generated)</td>
+                <td>Captain_Sleepy</td>
+                <td>Available</td>
+            </tr>
+            <tr>
+                <td>Rasta Man - 420 Reggae Chill Vibes (AI-Generated)</td>
+                <td>Captain_Sleepy</td>
+                <td>Available</td>
+            </tr>
+            <tr>
+                <td>Sunset - 420 Reggae Chill Vibes (AI-Generated)</td>
+                <td>Captain_Sleepy</td>
+                <td>Available</td>
+            </tr>
         </tbody>
-      </table>
-    </div>
-  </main>
+    </table>
 
   <footer>
-    <p>MusicSwipe &copy; 2025 | Created by YourName | <a href="mailto:youremail@example.com">Email Us</a></p>
-    <p><a href="https://soundcloud.com" target="_blank">Visit SoundCloud</a></p>
+    <p>&copy; 2025 MusicSwipe | Designed by Shuban | <a href="mailto:info@musicswipe.com">info@musicswipe.com</a></p>
   </footer>
-
-  <script>
-    const savedTracks = JSON.parse(localStorage.getItem('savedTracks') || '[]');
-    const tbody = document.getElementById('savedTracksTable');
-
-    if (savedTracks.length) {
-      tbody.innerHTML = '';
-      savedTracks.forEach((track, i) => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${i + 1}</td>
-          <td>${track.title}</td>
-          <td>${track.artist}</td>
-          <td>${track.genre}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-  </script>
 </body>
 </html>
