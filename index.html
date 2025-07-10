@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MusicSwipe - Home</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="navbar">
+    <a href="index.html" class="logo">MusicSwipe</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="table.html">Saved Tracks</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+  </header>
+
+  <main class="main-content">
+    <div class="slider">
+      <img src="images/slider1.jpg" alt="Banner Image 1" class="slide active" />
+      <img src="images/slider2.jpg" alt="Banner Image 2" class="slide" />
+      <img src="images/slider3.jpg" alt="Banner Image 3" class="slide" />
+    </div>
+
+    <div class="card" id="profileCard">
+      <img id="profileImg" src="" alt="Track Artwork" />
+      <div class="info" id="profileInfo"></div>
+      <audio id="audioPlayer" controls class="audio-player"></audio>
+    </div>
+
+    <div class="buttons">
+      <button class="reject" onclick="rejectProfile()">Reject</button>
+      <button class="match" onclick="matchProfile()">Match</button>
+      <button class="report" onclick="openReportModal()">Report</button>
+    </div>
+  </main>
+
+  <div id="messageBox" class="hidden">
+    <div class="header">
+      <img id="messageProfilePic" src="" alt="Artwork" />
+      <strong id="messageProfileName">Name</strong>
+    </div>
+    <p>Send a message</p>
+    <input type="text" value="Hi, how are you?" class="message-input" />
+    <div class="note">💡 Be respectful. Don't share sensitive information.</div>
+    <button onclick="closeMessageBox()" class="btn-full-width">Send</button>
+  </div>
+
+  <div id="reportModal" class="hidden">
+    <p>Report Track For:</p>
+    <select class="full-width-select">
+      <option>Fake</option>
+      <option>Harassment</option>
+      <option>Others</option>
+    </select>
+    <br /><br />
+    <button onclick="closeReportModal()" class="btn-full-width">Submit Report</button>
+  </div>
+
+  <div id="overlay" class="hidden"></div>
+
+  <footer class="site-footer">
+    <div class="footer-content">
+      <p>© 2025 MusicSwipe. All rights reserved.</p>
+      <address>
+        123 Music Ave, Sound City, World<br />
+        <a href="mailto:contact@musicswipe.com">contact@musicswipe.com</a>
+      </address>
+      <nav class="footer-nav">
+        <a href="index.html">Home</a> |
+        <a href="gallery.html">Gallery</a> |
+        <a href="table.html">Saved Tracks</a> |
+        <a href="contact.html">Contact</a> |
+        <a href="about.html">About</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    const tracks = [
+      { img: 'images/diewithasmile.jpg', title: 'Die With A Smile', artist: 'Lady Gaga & Bruno Mars', audio: 'audio/die_with_a_smile.mp3' },
+      { img: 'images/birds_of_a_feather.jpg', title: 'BIRDS OF A FEATHER', artist: 'Billie Eilish', audio: 'audio/birds_of_a_feather.mp3' },
+      { img: 'images/up_from_the_bottom.jpg', title: 'Up From The Bottom', artist: 'Linkin Park', audio: 'audio/up_from_the_bottom.mp3' },
+      { img: 'images/broken_man.jpg', title: 'Broken Man', artist: 'St. Vincent', audio: 'audio/broken_man.mp3' },
+      { img: 'images/luther.jpg', title: 'Luther', artist: 'Kendrick Lamar & SZA', audio: 'audio/luther.mp3' },
+      { img: 'images/evil_j0rdan.jpg', title: 'Evil J0rdan', artist: 'Playboi Carti', audio: 'audio/evil_j0rdan.mp3' },
+      { img: 'images/watch_me.jpg', title: 'Watch Me!', artist: 'Witch Watch', audio: 'audio/watch_me.mp3' },
+      { img: 'images/neon_heaven.jpg', title: 'Neon Heaven', artist: 'Billie Eilish', audio: 'audio/neon_heaven.mp3' }
+    ];
+
+    let currentIndex = 0;
+
+    function loadTrack(index) {
+      const track = tracks[index];
+      const profileImg = document.getElementById('profileImg');
+      const profileInfo = document.getElementById('profileInfo');
+      const audioPlayer = document.getElementById('audioPlayer');
+
+      profileImg.src = track.img;
+      profileImg.alt = `${track.title} Album Artwork`;
+      profileInfo.textContent = `${track.title} — ${track.artist}`;
+      audioPlayer.src = track.audio;
+      audioPlayer.load();
+    }
+
+    function matchProfile() {
+      const track = tracks[currentIndex];
+
+      swipeRight();
+      setTimeout(() => {
+        document.getElementById('messageProfilePic').src = track.img;
+        document.getElementById('messageProfileName').textContent = track.title;
+        document.getElementById('messageBox').classList.remove('hidden');
+        document.getElementById('overlay').classList.remove('hidden');
+      }, 300);
+
+      saveTrack(track);
+    }
+
+    function saveTrack(track) {
+      let savedTracks = JSON.parse(localStorage.getItem('savedTracks') || '[]');
+      const exists = savedTracks.some(saved => saved.title === track.title && saved.artist === track.artist);
+      if (!exists) {
+        savedTracks.push(track);
+        localStorage.setItem('savedTracks', JSON.stringify(savedTracks));
+      }
+    }
+
+    function rejectProfile() {
+      swipeLeft();
+      currentIndex = (currentIndex + 1) % tracks.length;
+      setTimeout(() => loadTrack(currentIndex), 300);
+    }
+
+    function swipeRight() {
+      const card = document.getElementById('profileCard');
+      card.style.transition = 'transform 0.4s ease';
+      card.style.transform = 'translateX(150%) rotate(15deg)';
+      setTimeout(() => {
+        card.style.transition = 'none';
+        card.style.transform = 'translateX(0) rotate(0deg)';
+        currentIndex = (currentIndex + 1) % tracks.length;
+        loadTrack(currentIndex);
+      }, 400);
+    }
+
+    function swipeLeft() {
+      const card = document.getElementById('profileCard');
+      card.style.transition = 'transform 0.4s ease';
+      card.style.transform = 'translateX(-150%) rotate(-15deg)';
+      setTimeout(() => {
+        card.style.transition = 'none';
+        card.style.transform = 'translateX(0) rotate(0deg)';
+      }, 400);
+    }
+
+    function closeMessageBox() {
+      document.getElementById('messageBox').classList.add('hidden');
+      document.getElementById('overlay').classList.add('hidden');
+    }
+
+    function openReportModal() {
+      document.getElementById('reportModal').classList.remove('hidden');
+      document.getElementById('overlay').classList.remove('hidden');
+    }
+
+    function closeReportModal() {
+      document.getElementById('reportModal').classList.add('hidden');
+      document.getElementById('overlay').classList.add('hidden');
+    }
+
+    // Initial load
+    loadTrack(currentIndex);
+
+    // Banner slider
+    let slideIndex = 0;
+    const slides = document.querySelectorAll('.slide');
+    function showSlides() {
+      slides.forEach(s => s.classList.remove('active'));
+      slides[slideIndex].classList.add('active');
+      slideIndex = (slideIndex + 1) % slides.length;
+    }
+    setInterval(showSlides, 5000);
+  </script>
+</body>
+</html>
